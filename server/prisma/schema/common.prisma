@@ -1,0 +1,25 @@
+enum VerificationStatus {
+  pending
+  approved
+  rejected
+}
+
+enum MediaType {
+  image
+  video
+  document
+}
+
+enum MimeType {
+  jpeg
+  png
+  jpg
+  pdf
+  mp4
+}
+
+enum TierName {
+  Basic
+  Standard
+  Premium
+}
