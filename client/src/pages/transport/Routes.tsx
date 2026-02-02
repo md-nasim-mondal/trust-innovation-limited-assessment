@@ -190,7 +190,7 @@ export default function Routes() {
         </button>
       </div>
 
-      <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {routes.map((route) => (
           <div
             key={route.id}
@@ -205,7 +205,7 @@ export default function Routes() {
                     </span>
                   )}
                 </h3>
-                <div className='flex gap-1'>
+                <div className='flex gap-1 shrink-0'>
                   <button
                     onClick={() => handleEdit(route)}
                     className='text-gray-400 hover:text-amber-500'>
@@ -218,7 +218,7 @@ export default function Routes() {
                   </button>
                 </div>
               </div>
-              <div className='mt-1 flex items-center gap-2 text-xs text-gray-500'>
+              <div className='mt-1 flex items-center gap-2 text-xs text-gray-500 flex-wrap'>
                 <span className='font-semibold text-gray-700'>
                   {route.startPoint}
                 </span>

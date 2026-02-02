@@ -116,68 +116,74 @@ export default function Allocations() {
       </div>
 
       <div className='rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden'>
-        <table className='w-full text-left text-sm text-gray-600'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
-            <tr>
-              <th className='px-6 py-4'>Student</th>
-              <th className='px-6 py-4'>Route</th>
-              <th className='px-6 py-4'>Vehicle</th>
-              <th className='px-6 py-4'>Start Date</th>
-              <th className='px-6 py-4'>Status</th>
-              <th className='px-6 py-4 text-right'>Action</th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-100'>
-            {allocations.map((alloc) => (
-              <tr key={alloc.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4'>
-                  <div className='flex items-center gap-3'>
-                    <div className='h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500'>
-                      <User size={14} />
-                    </div>
-                    <div>
-                      <p className='font-medium text-gray-900'>
-                        {alloc.student.name}
-                      </p>
-                      <p className='text-xs text-gray-500'>
-                        Roll: {alloc.student.rollNo}
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td className='px-6 py-4 font-medium'>{alloc.route.name}</td>
-                <td className='px-6 py-4 text-gray-500'>
-                  {alloc.vehicle.vehicleNumber}
-                </td>
-                <td className='px-6 py-4 text-gray-500'>
-                  {new Date(alloc.startDate).toLocaleDateString()}
-                </td>
-                <td className='px-6 py-4'>
-                  <span className='inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700'>
-                    <CheckCircle size={10} /> Active
-                  </span>
-                </td>
-                <td className='px-6 py-4 text-right'>
-                  <button
-                    onClick={() => handleCancelAllocation(alloc.id)}
-                    className='text-gray-400 hover:text-red-500'
-                    title='Cancel Allocation'>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {allocations.length === 0 && (
+        <div className='overflow-x-auto'>
+          <table className='w-full text-left text-sm text-gray-600'>
+            <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
               <tr>
-                <td
-                  colSpan={6}
-                  className='px-6 py-8 text-center text-gray-500 italic'>
-                  No active allocations found.
-                </td>
+                <th className='px-6 py-4 whitespace-nowrap'>Student</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Route</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Vehicle</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Start Date</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Status</th>
+                <th className='px-6 py-4 text-right whitespace-nowrap'>
+                  Action
+                </th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='divide-y divide-gray-100'>
+              {allocations.map((alloc) => (
+                <tr key={alloc.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <div className='flex items-center gap-3'>
+                      <div className='h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500'>
+                        <User size={14} />
+                      </div>
+                      <div>
+                        <p className='font-medium text-gray-900'>
+                          {alloc.student.name}
+                        </p>
+                        <p className='text-xs text-gray-500'>
+                          Roll: {alloc.student.rollNo}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className='px-6 py-4 font-medium whitespace-nowrap'>
+                    {alloc.route.name}
+                  </td>
+                  <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
+                    {alloc.vehicle.vehicleNumber}
+                  </td>
+                  <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
+                    {new Date(alloc.startDate).toLocaleDateString()}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <span className='inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700'>
+                      <CheckCircle size={10} /> Active
+                    </span>
+                  </td>
+                  <td className='px-6 py-4 text-right whitespace-nowrap'>
+                    <button
+                      onClick={() => handleCancelAllocation(alloc.id)}
+                      className='text-gray-400 hover:text-red-500'
+                      title='Cancel Allocation'>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {allocations.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className='px-6 py-8 text-center text-gray-500 italic'>
+                    No active allocations found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (

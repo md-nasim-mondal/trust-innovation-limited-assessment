@@ -96,28 +96,28 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'>
         {cards.map((card, index) => (
           <div
             key={index}
             className='overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md'>
-            <div className='p-6'>
+            <div className='p-4 sm:p-6'>
               <div className='flex items-center justify-between'>
                 <div>
-                  <p className='text-sm font-medium text-gray-500'>
+                  <p className='text-xs sm:text-sm font-medium text-gray-500'>
                     {card.title}
                   </p>
-                  <p className='mt-2 text-3xl font-bold text-gray-900'>
+                  <p className='mt-2 text-2xl sm:text-3xl font-bold text-gray-900'>
                     {card.value}
                   </p>
                 </div>
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-lg ${card.color} text-white shadow-md`}>
-                  <card.icon size={24} />
+                  className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg ${card.color} text-white shadow-md`}>
+                  <card.icon size={20} className='sm:w-6 sm:h-6' />
                 </div>
               </div>
               <div className='mt-4 flex items-center'>
-                <span className='text-xs font-medium text-gray-400'>
+                <span className='text-[10px] sm:text-xs font-medium text-gray-400'>
                   {card.description}
                 </span>
               </div>
@@ -126,11 +126,11 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className='grid gap-6 md:grid-cols-2'>
-        <div className='rounded-xl border border-gray-200 bg-linear-to-br from-indigo-500 to-purple-600 p-6 text-white'>
+      <div className='grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2'>
+        <div className='rounded-xl border border-gray-200 bg-linear-to-br from-indigo-500 to-purple-600 p-4 sm:p-6 text-white'>
           <h3 className='text-lg font-bold'>Quick Actions</h3>
           <p className='mb-6 opacity-90 text-sm'>Common tasks to get started</p>
-          <div className='grid grid-cols-2 gap-3'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
             <a
               href='/students'
               className='rounded-lg bg-white/10 px-4 py-3 text-center text-sm font-semibold backdrop-blur-sm hover:bg-white/20 transition-colors'>

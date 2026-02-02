@@ -71,62 +71,64 @@ export default function Students() {
       </div>
 
       <div className='rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden'>
-        <table className='w-full text-left text-sm text-gray-600'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
-            <tr>
-              <th className='px-6 py-4'>Name / Roll</th>
-              <th className='px-6 py-4'>Grade</th>
-              <th className='px-6 py-4'>Contact</th>
-              <th className='px-6 py-4'>Address</th>
-              <th className='px-6 py-4'>Joined</th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-100'>
-            {students.map((student) => (
-              <tr key={student.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4'>
-                  <div className='flex items-center gap-3'>
-                    <div className='h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500'>
-                      <User size={14} />
-                    </div>
-                    <div>
-                      <p className='font-medium text-gray-900'>
-                        {student.name}
-                      </p>
-                      <p className='text-xs text-gray-500'>
-                        Roll: {student.rollNo}
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td className='px-6 py-4'>{student.grade}</td>
-                <td className='px-6 py-4'>{student.contactNumber || "-"}</td>
-                <td
-                  className='px-6 py-4 truncate max-w-xs'
-                  title={student.address || ""}>
-                  {student.address || "-"}
-                </td>
-                <td className='px-6 py-4 text-gray-500'>
-                  {new Date(student.createdAt || "").toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-            {students.length === 0 && (
+        <div className='overflow-x-auto'>
+          <table className='w-full text-left text-sm text-gray-600'>
+            <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
               <tr>
-                <td
-                  colSpan={5}
-                  className='px-6 py-8 text-center text-gray-500 italic'>
-                  No students found.
-                </td>
+                <th className='px-6 py-4 whitespace-nowrap'>Name / Roll</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Grade</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Contact</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Address</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Joined</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='divide-y divide-gray-100'>
+              {students.map((student) => (
+                <tr key={student.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 min-w-50'>
+                    <div className='flex items-center gap-3'>
+                      <div className='h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500'>
+                        <User size={14} />
+                      </div>
+                      <div>
+                        <p className='font-medium text-gray-900'>
+                          {student.name}
+                        </p>
+                        <p className='text-xs text-gray-500'>
+                          Roll: {student.rollNo}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className='px-6 py-4'>{student.grade}</td>
+                  <td className='px-6 py-4'>{student.contactNumber || "-"}</td>
+                  <td
+                    className='px-6 py-4 truncate max-w-xs'
+                    title={student.address || ""}>
+                    {student.address || "-"}
+                  </td>
+                  <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
+                    {new Date(student.createdAt || "").toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+              {students.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className='px-6 py-8 text-center text-gray-500 italic'>
+                    No students found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4'>
-          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl'>
+          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl max-h-[90vh] overflow-y-auto'>
             <div className='mb-4 flex items-center justify-between'>
               <h2 className='text-xl font-bold text-gray-900'>Add Student</h2>
               <button
@@ -150,7 +152,7 @@ export default function Students() {
                   }
                 />
               </div>
-              <div className='grid grid-cols-2 gap-4'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-sm font-medium text-gray-700'>
                     Roll No

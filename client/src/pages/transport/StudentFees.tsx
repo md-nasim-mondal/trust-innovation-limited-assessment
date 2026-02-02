@@ -69,77 +69,83 @@ export default function StudentFees() {
       </div>
 
       <div className='rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden'>
-        <table className='w-full text-left text-sm text-gray-600'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
-            <tr>
-              <th className='px-6 py-4'>Student</th>
-              <th className='px-6 py-4'>Description</th>
-              <th className='px-6 py-4'>Month</th>
-              <th className='px-6 py-4'>Amount</th>
-              <th className='px-6 py-4'>Status</th>
-              <th className='px-6 py-4'>Date Generated</th>
-              <th className='px-6 py-4 text-right'>Actions</th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-100'>
-            {studentFees.map((fee) => (
-              <tr key={fee.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4 font-medium text-gray-900'>
-                  {fee.student.name}{" "}
-                  <span className='text-xs text-gray-500'>
-                    ({fee.student.rollNo})
-                  </span>
-                </td>
-                <td className='px-6 py-4'>{fee.feeDescription}</td>
-                <td className='px-6 py-4'>{fee.month}</td>
-                <td className='px-6 py-4 font-bold text-gray-900'>
-                  ${Number(fee.amount).toFixed(2)}
-                </td>
-                <td className='px-6 py-4'>
-                  <span
-                    className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                      fee.status === "PAID"
-                        ? "bg-green-50 text-green-700"
-                        : "bg-amber-50 text-amber-700"
-                    }`}>
-                    {fee.status}
-                  </span>
-                </td>
-                <td className='px-6 py-4 text-gray-500'>
-                  {new Date(fee.createdAt).toLocaleDateString()}
-                </td>
-                <td className='px-6 py-4 text-right'>
-                  <div className='flex justify-end gap-2 text-gray-400'>
-                    {fee.status !== "PAID" && (
-                      <button
-                        onClick={() => handleMarkPaid(fee.id)}
-                        className='text-green-600 hover:text-green-800'
-                        title='Mark as Paid'>
-                        <CheckCircle size={16} />
-                      </button>
-                    )}
-                    <button
-                      onClick={() => handleDelete(fee.id)}
-                      className='hover:text-red-500'
-                      title='Delete Record'>
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {studentFees.length === 0 && (
+        <div className='overflow-x-auto'>
+          <table className='w-full text-left text-sm text-gray-600'>
+            <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
               <tr>
-                <td
-                  colSpan={7}
-                  className='px-6 py-8 text-center text-gray-500 italic'>
-                  No fee records found. Assign a student to transport to see
-                  generated fees.
-                </td>
+                <th className='px-6 py-4 whitespace-nowrap'>Student</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Description</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Month</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Amount</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Status</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Date Generated</th>
+                <th className='px-6 py-4 text-right whitespace-nowrap'>
+                  Actions
+                </th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='divide-y divide-gray-100'>
+              {studentFees.map((fee) => (
+                <tr key={fee.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+                    {fee.student.name}{" "}
+                    <span className='text-xs text-gray-500'>
+                      ({fee.student.rollNo})
+                    </span>
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    {fee.feeDescription}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>{fee.month}</td>
+                  <td className='px-6 py-4 font-bold text-gray-900 whitespace-nowrap'>
+                    ${Number(fee.amount).toFixed(2)}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <span
+                      className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
+                        fee.status === "PAID"
+                          ? "bg-green-50 text-green-700"
+                          : "bg-amber-50 text-amber-700"
+                      }`}>
+                      {fee.status}
+                    </span>
+                  </td>
+                  <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
+                    {new Date(fee.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className='px-6 py-4 text-right whitespace-nowrap'>
+                    <div className='flex justify-end gap-2 text-gray-400'>
+                      {fee.status !== "PAID" && (
+                        <button
+                          onClick={() => handleMarkPaid(fee.id)}
+                          className='text-green-600 hover:text-green-800'
+                          title='Mark as Paid'>
+                          <CheckCircle size={16} />
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDelete(fee.id)}
+                        className='hover:text-red-500'
+                        title='Delete Record'>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {studentFees.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className='px-6 py-8 text-center text-gray-500 italic'>
+                    No fee records found. Assign a student to transport to see
+                    generated fees.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

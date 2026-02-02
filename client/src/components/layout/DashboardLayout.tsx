@@ -35,11 +35,19 @@ export default function DashboardLayout() {
 
   return (
     <div className='flex h-screen bg-gray-50'>
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className='fixed inset-0 z-40 bg-black/50 md:hidden'
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={cn(
           "fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out md:relative md:translate-x-0",
-          !isSidebarOpen && "-translate-x-full md:hidden",
+          !isSidebarOpen ? "-translate-x-full" : "translate-x-0",
         )}>
         <div className='flex h-16 items-center justify-between px-4 bg-slate-950'>
           <h1 className='text-xl font-bold tracking-wider'>SCHOOL MS</h1>
@@ -58,6 +66,7 @@ export default function DashboardLayout() {
               <Link
                 key={item.name}
                 to={item.href}
+                onClick={() => setSidebarOpen(false)} // Auto-close on link click (mobile mainly)
                 className={cn(
                   "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   isActive
@@ -88,7 +97,7 @@ export default function DashboardLayout() {
           </div>
         </header>
 
-        <main className='flex-1 overflow-y-auto bg-gray-50 p-6'>
+        <main className='flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6'>
           <Outlet />
         </main>
       </div>

@@ -100,51 +100,55 @@ export default function FeesMaster() {
       </div>
 
       <div className='rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden'>
-        <table className='w-full text-left text-sm text-gray-600'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
-            <tr>
-              <th className='px-6 py-4'>Type</th>
-              <th className='px-6 py-4'>Amount</th>
-              <th className='px-6 py-4'>Effective Date</th>
-              <th className='px-6 py-4'>Description</th>
-              <th className='px-6 py-4 text-right'>Actions</th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-100'>
-            {fees.map((fee) => (
-              <tr key={fee.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4'>
-                  <span className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10'>
-                    {fee.type}
-                  </span>
-                </td>
-                <td className='px-6 py-4 font-medium text-gray-900'>
-                  ${Number(fee.amount).toFixed(2)}
-                </td>
-                <td className='px-6 py-4 text-gray-500'>
-                  {new Date(fee.effectiveDate).toLocaleDateString()}
-                </td>
-                <td className='px-6 py-4 text-gray-500'>
-                  {fee.description || "-"}
-                </td>
-                <td className='px-6 py-4 text-right'>
-                  <div className='flex justify-end gap-2 text-gray-400'>
-                    <button
-                      onClick={() => handleEdit(fee)}
-                      className='hover:text-amber-500'>
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(fee.id)}
-                      className='hover:text-red-500'>
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
+        <div className='overflow-x-auto'>
+          <table className='w-full text-left text-sm text-gray-600'>
+            <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
+              <tr>
+                <th className='px-6 py-4 whitespace-nowrap'>Type</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Amount</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Effective Date</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Description</th>
+                <th className='px-6 py-4 text-right whitespace-nowrap'>
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='divide-y divide-gray-100'>
+              {fees.map((fee) => (
+                <tr key={fee.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <span className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10'>
+                      {fee.type}
+                    </span>
+                  </td>
+                  <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+                    ${Number(fee.amount).toFixed(2)}
+                  </td>
+                  <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
+                    {new Date(fee.effectiveDate).toLocaleDateString()}
+                  </td>
+                  <td className='px-6 py-4 text-gray-500'>
+                    {fee.description || "-"}
+                  </td>
+                  <td className='px-6 py-4 text-right whitespace-nowrap'>
+                    <div className='flex justify-end gap-2 text-gray-400'>
+                      <button
+                        onClick={() => handleEdit(fee)}
+                        className='hover:text-amber-500'>
+                        <Edit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(fee.id)}
+                        className='hover:text-red-500'>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (

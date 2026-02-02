@@ -95,39 +95,45 @@ export default function PickupPoints() {
       </div>
 
       <div className='rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden'>
-        <table className='w-full text-left text-sm text-gray-600'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
-            <tr>
-              <th className='px-6 py-4'>Stop Name</th>
-              <th className='px-6 py-4'>Address/Location</th>
-              <th className='px-6 py-4 text-right'>Actions</th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-100'>
-            {points.map((point) => (
-              <tr key={point.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4 font-medium text-gray-900'>
-                  {point.name}
-                </td>
-                <td className='px-6 py-4'>{point.address || "-"}</td>
-                <td className='px-6 py-4 text-right'>
-                  <div className='flex justify-end gap-2 text-gray-400'>
-                    <button
-                      onClick={() => handleEdit(point)}
-                      className='hover:text-amber-500'>
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(point.id)}
-                      className='hover:text-red-500'>
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
+        <div className='overflow-x-auto'>
+          <table className='w-full text-left text-sm text-gray-600'>
+            <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
+              <tr>
+                <th className='px-6 py-4 whitespace-nowrap'>Stop Name</th>
+                <th className='px-6 py-4 whitespace-nowrap'>
+                  Address/Location
+                </th>
+                <th className='px-6 py-4 text-right whitespace-nowrap'>
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='divide-y divide-gray-100'>
+              {points.map((point) => (
+                <tr key={point.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+                    {point.name}
+                  </td>
+                  <td className='px-6 py-4'>{point.address || "-"}</td>
+                  <td className='px-6 py-4 text-right whitespace-nowrap'>
+                    <div className='flex justify-end gap-2 text-gray-400'>
+                      <button
+                        onClick={() => handleEdit(point)}
+                        className='hover:text-amber-500'>
+                        <Edit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(point.id)}
+                        className='hover:text-red-500'>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (

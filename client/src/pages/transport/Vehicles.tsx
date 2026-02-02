@@ -104,57 +104,65 @@ export default function Vehicles() {
       </div>
 
       <div className='rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden'>
-        <table className='w-full text-left text-sm text-gray-600'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
-            <tr>
-              <th className='px-6 py-4'>Vehicle No</th>
-              <th className='px-6 py-4'>Driver</th>
-              <th className='px-6 py-4'>Contact</th>
-              <th className='px-6 py-4'>Capacity</th>
-              <th className='px-6 py-4 text-right'>Actions</th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-100'>
-            {vehicles.map((vehicle) => (
-              <tr key={vehicle.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4 font-medium text-gray-900'>
-                  {vehicle.vehicleNumber}
-                </td>
-                <td className='px-6 py-4'>
-                  <div className='flex flex-col'>
-                    <span className='font-medium text-gray-900'>
-                      {vehicle.driverName}
-                    </span>
-                    <span className='text-xs text-gray-400'>
-                      Helper: {vehicle.helperName || "N/A"}
-                    </span>
-                  </div>
-                </td>
-                <td className='px-6 py-4'>{vehicle.contactNumber}</td>
-                <td className='px-6 py-4'>{vehicle.capacity || "-"}</td>
-                <td className='px-6 py-4 text-right'>
-                  <div className='flex justify-end gap-2 text-gray-400'>
-                    <button
-                      onClick={() => handleEdit(vehicle)}
-                      className='hover:text-amber-500'>
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(vehicle.id)}
-                      className='hover:text-red-500'>
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
+        <div className='overflow-x-auto'>
+          <table className='w-full text-left text-sm text-gray-600'>
+            <thead className='bg-gray-50 text-xs uppercase text-gray-500'>
+              <tr>
+                <th className='px-6 py-4 whitespace-nowrap'>Vehicle No</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Driver</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Contact</th>
+                <th className='px-6 py-4 whitespace-nowrap'>Capacity</th>
+                <th className='px-6 py-4 text-right whitespace-nowrap'>
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='divide-y divide-gray-100'>
+              {vehicles.map((vehicle) => (
+                <tr key={vehicle.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+                    {vehicle.vehicleNumber}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <div className='flex flex-col'>
+                      <span className='font-medium text-gray-900'>
+                        {vehicle.driverName}
+                      </span>
+                      <span className='text-xs text-gray-400'>
+                        Helper: {vehicle.helperName || "N/A"}
+                      </span>
+                    </div>
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    {vehicle.contactNumber}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    {vehicle.capacity || "-"}
+                  </td>
+                  <td className='px-6 py-4 text-right whitespace-nowrap'>
+                    <div className='flex justify-end gap-2 text-gray-400'>
+                      <button
+                        onClick={() => handleEdit(vehicle)}
+                        className='hover:text-amber-500'>
+                        <Edit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(vehicle.id)}
+                        className='hover:text-red-500'>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4'>
-          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl'>
+          <div className='w-full max-w-md rounded-2xl bg-white p-6 shadow-xl max-h-[90vh] overflow-y-auto'>
             <div className='mb-4 flex items-center justify-between'>
               <h2 className='text-xl font-bold text-gray-900'>
                 {editingId ? "Edit Vehicle" : "Add New Vehicle"}
@@ -181,7 +189,7 @@ export default function Vehicles() {
                   }
                 />
               </div>
-              <div className='grid grid-cols-2 gap-4'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-sm font-medium text-gray-700'>
                     Driver Name
@@ -216,7 +224,7 @@ export default function Vehicles() {
                   />
                 </div>
               </div>
-              <div className='grid grid-cols-2 gap-4'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-sm font-medium text-gray-700'>
                     Helper Name
