@@ -258,6 +258,33 @@ const updateStudentFeeStatus = async (id: string, status: string) => {
   });
 };
 
+const getDashboardStats = async () => {
+  const totalStudents = await prisma.student.count();
+  const totalVehicles = await prisma.vehicle.count();
+  const totalRoutes = await prisma.route.count();
+  const activeAllocations = await prisma.transportAllocation.count({
+    where: { status: "ACTIVE" },
+  });
+  const pendingFeesCount = await prisma.studentFeeAssignment.count({
+    where: { status: "PENDING" },
+  });
+
+  // Calculate total pending amount
+  const pendingFees = await prisma.studentFeeAssignment.aggregate({
+    where: { status: "PENDING" },
+    _sum: { amount: true },
+  });
+
+  return {
+    totalStudents,
+    totalVehicles,
+    totalRoutes,
+    activeAllocations,
+    pendingFeesCount,
+    totalPendingAmount: pendingFees._sum.amount || 0,
+  };
+};
+
 export const TransportService = {
   createVehicle,
   getAllVehicles,
@@ -282,4 +309,5 @@ export const TransportService = {
   getStudentFees,
   deleteStudentFee,
   updateStudentFeeStatus,
+  getDashboardStats,
 };

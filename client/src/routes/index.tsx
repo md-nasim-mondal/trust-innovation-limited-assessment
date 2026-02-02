@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router";
 import DashboardLayout from "../components/layout/DashboardLayout";
-import Home from "../pages/Home";
 import FeesMaster from "../pages/transport/FeesMaster";
 import PickupPoints from "../pages/transport/PickupPoints";
 import Vehicles from "../pages/transport/Vehicles";
@@ -8,6 +7,7 @@ import RoutesPage from "../pages/transport/Routes";
 import Allocations from "../pages/transport/Allocations";
 import StudentFees from "../pages/transport/StudentFees";
 import Students from "../pages/Students";
+import Dashboard from "../pages/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Dashboard/>,
       },
       {
         path: "students",

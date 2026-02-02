@@ -5,6 +5,8 @@ import { TransportValidation } from "./transport.validation";
 
 const router = express.Router();
 
+router.get("/stats", TransportController.getDashboardStats);
+
 // Vehicles
 router.post(
   "/vehicles",
