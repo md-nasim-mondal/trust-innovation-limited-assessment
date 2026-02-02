@@ -7,6 +7,7 @@ import Vehicles from "../pages/transport/Vehicles";
 import RoutesPage from "../pages/transport/Routes";
 import Allocations from "../pages/transport/Allocations";
 import StudentFees from "../pages/transport/StudentFees";
+import Students from "../pages/Students";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "students",
+        element: <Students />,
       },
       {
         path: "transport/fees",

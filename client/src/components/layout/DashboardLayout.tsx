@@ -30,6 +30,7 @@ export default function DashboardLayout() {
     { name: "Routes", href: "/transport/routes", icon: Route },
     { name: "Allocations", href: "/transport/allocations", icon: Users },
     { name: "Student Fees", href: "/transport/student-fees", icon: CreditCard },
+    { name: "Students", href: "/students", icon: Users },
   ];
 
   return (

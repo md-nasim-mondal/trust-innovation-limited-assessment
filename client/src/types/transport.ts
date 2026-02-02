@@ -43,6 +43,9 @@ export interface Student {
   name: string;
   rollNo: string;
   grade: string;
+  contactNumber?: string;
+  address?: string;
+  createdAt?: string;
 }
 
 export interface Allocation {
