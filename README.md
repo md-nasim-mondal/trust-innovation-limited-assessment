@@ -50,15 +50,45 @@ Ensure you have a PostgreSQL database running. Update the connection string in `
 
 ### 2. Backend Setup
 
-```bash
-cd server
-cp .env.example .env
-# Edit .env and set DATABASE_URL="postgresql://user:password@localhost:5432/transport_db?schema=public"
+1. Navigate to the server directory:
 
-pnpm install
-npx prisma migrate dev --name init
-pnpm dev
-```
+   ```bash
+   cd server
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Configure Environment Variables:
+   - Create a `.env` file by copying the example:
+     ```bash
+     cp .env.example .env
+     ```
+   - Update `.env` with your credentials:
+     ```env
+     NODE_ENV=development
+     PORT=5000
+     # Your PostgreSQL Connection String
+     DATABASE_URL="postgresql://user:password@localhost:5432/transport_db?schema=public"
+     # Same as DATABASE_URL for local development (needed for pooling in prod)
+     DIRECT_URL="postgresql://user:password@localhost:5432/transport_db?schema=public"
+     # URL of your frontend application
+     FRONTEND_URL="http://localhost:5173"
+     ```
+
+4. Initialize Database:
+
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+
+5. Start the Server:
+   ```bash
+   pnpm dev
+   ```
 
 The server will start at `http://localhost:5000`.
 
