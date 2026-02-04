@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
-    "build": "tsc && tsc-alias",
+    "build": "prisma generate && tsc && tsc-alias",
     "lint": "eslint src/**/*.ts",
     "fix": "eslint src/**/*.ts --fix",
     "db:generate": "prisma generate --schema=./prisma/schema",
@@ -40,6 +40,7 @@
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.0.2",
     "nodemailer": "^7.0.12",
+    "pg": "^8.18.0",
     "zod": "^4.3.5"
   },
   "devDependencies": {
