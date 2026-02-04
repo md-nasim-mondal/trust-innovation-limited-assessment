@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import notFound from "./app/middlewares/notFound";
+import { config } from "./config";
 
 const app: Application = express();
 
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // CORS Setup
 app.use(
   cors({
-    origin: "http://localhost:3000", // Frontend URL
+    origin: config.FRONTEND_URL, // Frontend URL from env
     credentials: true,
   }),
 );

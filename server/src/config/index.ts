@@ -8,6 +8,7 @@ interface EnvConfig {
   PORT?: string | number;
   DATABASE_URL: string;
   DIRECT_URL: string;
+  FRONTEND_URL: string;
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -17,6 +18,7 @@ const loadEnvVariables = (): EnvConfig => {
     PORT: process.env.PORT || 5000,
     DATABASE_URL: process.env.DATABASE_URL as string,
     DIRECT_URL: process.env.DIRECT_URL as string,
+    FRONTEND_URL: process.env.FRONTEND_URL as string,
   };
 };
 
