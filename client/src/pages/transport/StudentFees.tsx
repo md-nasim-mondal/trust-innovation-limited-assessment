@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../../lib/axios";
 import { Trash2, CheckCircle } from "lucide-react";
+import toast from "react-hot-toast";
 
 // Minimal interface for fee response
 interface FeeRecord {
@@ -23,8 +25,11 @@ export default function StudentFees() {
     try {
       const res = await api.get("/transport/student-fees");
       setStudentFees(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(
+        error.response?.data?.message || "Failed to fetch student fees",
+      );
     }
   }, []);
 
@@ -39,10 +44,13 @@ export default function StudentFees() {
     if (confirm("Are you sure you want to delete this fee record?")) {
       try {
         await api.delete(`/transport/student-fees/${id}`);
+        toast.success("Fee record deleted successfully");
         fetchStudentFees();
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Error deleting fee record");
+        toast.error(
+          error.response?.data?.message || "Error deleting fee record",
+        );
       }
     }
   };
@@ -50,10 +58,11 @@ export default function StudentFees() {
   const handleMarkPaid = async (id: string) => {
     try {
       await api.patch(`/transport/student-fees/${id}/pay`, { status: "PAID" });
+      toast.success("Fee status updated to PAID");
       fetchStudentFees();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Error updating status");
+      toast.error(error.response?.data?.message || "Error updating status");
     }
   };
 

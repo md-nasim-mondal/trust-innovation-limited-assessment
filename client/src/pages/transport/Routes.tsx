@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../../lib/axios";
 import type {
@@ -7,6 +8,7 @@ import type {
   Vehicle,
 } from "../../types/transport";
 import { Plus, MapPin, Bus, Edit, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Routes() {
   const [routes, setRoutes] = useState<Route[]>([]);
@@ -38,8 +40,9 @@ export default function Routes() {
     try {
       const res = await api.get("/transport/routes");
       setRoutes(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to fetch routes");
     }
   }, []);
 
@@ -98,10 +101,11 @@ export default function Routes() {
     if (confirm("Are you sure you want to delete this route?")) {
       try {
         await api.delete(`/transport/routes/${id}`);
+        toast.success("Route deleted successfully");
         fetchRoutes();
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Error deleting route");
+        toast.error(error.response?.data?.message || "Error deleting route");
       }
     }
   };
@@ -133,14 +137,17 @@ export default function Routes() {
 
       if (editingId) {
         await api.patch(`/transport/routes/${editingId}`, payload);
+        toast.success("Route updated successfully");
       } else {
         await api.post("/transport/routes", payload);
+        toast.success("Route description created successfully");
       }
       fetchRoutes();
       setIsRouteModalOpen(false);
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Operation failed");
     }
   };
 
@@ -152,11 +159,13 @@ export default function Routes() {
         routeId: selectedRouteId,
         vehicleId: assignVehicleForm.vehicleId,
       });
+      toast.success("Vehicle assigned successfully");
       fetchRoutes(); // refresh to hopefully show assigned vehicle
       setIsAssignVehicleModalOpen(false);
       setAssignVehicleForm({ vehicleId: "" });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to assign vehicle");
     }
   };
 

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../../lib/axios";
 import type { PickupPoint } from "../../types/transport";
 import { Plus, Trash2, Edit } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function PickupPoints() {
   const [points, setPoints] = useState<PickupPoint[]>([]);
@@ -15,8 +17,11 @@ export default function PickupPoints() {
     try {
       const res = await api.get("/transport/pickup-points");
       setPoints(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(
+        error.response?.data?.message || "Failed to fetch pickup points",
+      );
     }
   }, []);
 
@@ -42,10 +47,13 @@ export default function PickupPoints() {
     if (confirm("Are you sure you want to delete this pickup point?")) {
       try {
         await api.delete(`/transport/pickup-points/${id}`);
+        toast.success("Pickup point deleted successfully");
         fetchPoints();
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Error deleting pickup point");
+        toast.error(
+          error.response?.data?.message || "Error deleting pickup point",
+        );
       }
     }
   };
@@ -63,14 +71,17 @@ export default function PickupPoints() {
     try {
       if (editingId) {
         await api.patch(`/transport/pickup-points/${editingId}`, formData);
+        toast.success("Pickup point updated successfully");
       } else {
         await api.post("/transport/pickup-points", formData);
+        toast.success("Pickup point created successfully");
       }
       fetchPoints();
       setIsModalOpen(false);
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Operation failed");
     }
   };
 

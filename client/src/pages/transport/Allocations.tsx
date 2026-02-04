@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../../lib/axios";
 import type { Route, Allocation, Student } from "../../types/transport";
 import { Plus, CheckCircle, User, Trash2 } from "lucide-react";
 import { isAxiosError } from "axios";
+import toast from "react-hot-toast";
 
 export default function Allocations() {
   const [allocations, setAllocations] = useState<Allocation[]>([]);
@@ -19,8 +21,9 @@ export default function Allocations() {
     try {
       const res = await api.get("/transport/allocations");
       setAllocations(res.data.data);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      toast.error(e.response?.data?.message || "Failed to fetch allocations");
     }
   }, []);
 
@@ -69,14 +72,14 @@ export default function Allocations() {
       setSelectedStudentId("");
       setSelectedRouteId("");
       setSelectedVehicleId("");
-      alert("Student allocated successfully! Fee record generated.");
+      toast.success("Student allocated successfully! Fee record generated.");
     } catch (error) {
       console.error(error);
       let message = "Error creating allocation";
       if (isAxiosError(error) && error.response?.data?.message) {
         message = error.response.data.message;
       }
-      alert(message);
+      toast.error(message);
     }
   };
 
@@ -88,10 +91,13 @@ export default function Allocations() {
     ) {
       try {
         await api.delete(`/transport/allocations/${id}`);
+        toast.success("Allocation cancelled successfully");
         fetchAllocations();
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Error deleting allocation");
+        toast.error(
+          error.response?.data?.message || "Error deleting allocation",
+        );
       }
     }
   };

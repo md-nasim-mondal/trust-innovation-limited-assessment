@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../lib/axios";
 import { Plus, User } from "lucide-react";
 import type { Student } from "../types/transport";
 import { isAxiosError } from "axios";
+import toast from "react-hot-toast";
 
 export default function Students() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -19,8 +21,9 @@ export default function Students() {
     try {
       const res = await api.get("/students");
       setStudents(res.data.data);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      toast.error(e.response?.data?.message || "Failed to fetch students");
     }
   }, []);
 
@@ -44,14 +47,14 @@ export default function Students() {
         contactNumber: "",
         address: "",
       });
-      alert("Student created successfully");
+      toast.success("Student created successfully");
     } catch (error) {
       console.error(error);
       let message = "Error creating student";
       if (isAxiosError(error) && error.response?.data?.message) {
         message = error.response.data.message;
       }
-      alert(message);
+      toast.error(message);
     }
   };
 

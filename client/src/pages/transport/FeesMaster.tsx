@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../../lib/axios";
 import type { TransportFee } from "../../types/transport";
 import { Plus, Trash2, Edit } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function FeesMaster() {
   const [fees, setFees] = useState<TransportFee[]>([]);
@@ -18,8 +20,9 @@ export default function FeesMaster() {
     try {
       const res = await api.get("/transport/fees");
       setFees(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to fetch fees");
     }
   }, []);
 
@@ -45,10 +48,11 @@ export default function FeesMaster() {
     if (confirm("Are you sure you want to delete this fee structure?")) {
       try {
         await api.delete(`/transport/fees/${id}`);
+        toast.success("Fee structure deleted successfully");
         fetchFees();
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Error deleting fee");
+        toast.error(error.response?.data?.message || "Error deleting fee");
       }
     }
   };
@@ -68,14 +72,17 @@ export default function FeesMaster() {
     try {
       if (editingId) {
         await api.patch(`/transport/fees/${editingId}`, formData);
+        toast.success("Fee structure updated successfully");
       } else {
         await api.post("/transport/fees", formData);
+        toast.success("Fee structure created successfully");
       }
       fetchFees();
       setIsModalOpen(false);
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Operation failed");
     }
   };
 

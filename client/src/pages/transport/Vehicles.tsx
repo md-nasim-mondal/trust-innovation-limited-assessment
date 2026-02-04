@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useCallback } from "react";
 import api from "../../lib/axios";
 import type { Vehicle } from "../../types/transport";
 import { Plus, Trash2, Edit } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -18,8 +20,9 @@ export default function Vehicles() {
     try {
       const res = await api.get("/transport/vehicles");
       setVehicles(res.data.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to fetch vehicles");
     }
   }, []);
 
@@ -48,10 +51,11 @@ export default function Vehicles() {
     if (confirm("Are you sure you want to delete this vehicle?")) {
       try {
         await api.delete(`/transport/vehicles/${id}`);
+        toast.success("Vehicle deleted successfully");
         fetchVehicles();
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Error deleting vehicle");
+        toast.error(error.response?.data?.message || "Error deleting vehicle");
       }
     }
   };
@@ -72,14 +76,17 @@ export default function Vehicles() {
     try {
       if (editingId) {
         await api.patch(`/transport/vehicles/${editingId}`, formData);
+        toast.success("Vehicle updated successfully");
       } else {
         await api.post("/transport/vehicles", formData);
+        toast.success("Vehicle created successfully");
       }
       fetchVehicles();
       setIsModalOpen(false);
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Operation failed");
     }
   };
 
