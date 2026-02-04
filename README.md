@@ -2,6 +2,11 @@
 
 A comprehensive Transport Management System developed using React.js, Node.js, Express, and PostgreSQL with Prisma ORM. This module allows administrators to manage vehicles, routes, pickup points, and student allocations while ensuring automatic transport fee generation.
 
+## 🔗 Deployment
+
+- **Live Application (Frontend)**: [https://trust-innovation-limited-assessment.vercel.app/](https://trust-innovation-limited-assessment.vercel.app/)
+- **Backend API**: [https://trust-innovation-limited-server.vercel.app/](https://trust-innovation-limited-server.vercel.app/)
+
 ## 🚀 Features
 
 - **Masters Management**:
