@@ -19,10 +19,10 @@ export default function FeesMaster() {
   const fetchFees = useCallback(async () => {
     try {
       const res = await api.get("/transport/fees");
-      setFees(res.data.data);
+      setFees(res?.data?.data);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Failed to fetch fees");
+      toast.error(error?.response?.data?.message || "Failed to fetch fees");
     }
   }, []);
 
@@ -35,12 +35,12 @@ export default function FeesMaster() {
 
   const handleEdit = (fee: TransportFee) => {
     setFormData({
-      type: fee.type,
-      amount: fee.amount,
-      description: fee.description || "",
-      effectiveDate: String(fee.effectiveDate).split("T")[0],
+      type: fee?.type,
+      amount: fee?.amount,
+      description: fee?.description || "",
+      effectiveDate: String(fee?.effectiveDate).split("T")[0],
     });
-    setEditingId(fee.id);
+    setEditingId(fee?.id);
     setIsModalOpen(true);
   };
 
@@ -52,7 +52,7 @@ export default function FeesMaster() {
         fetchFees();
       } catch (error: any) {
         console.error(error);
-        toast.error(error.response?.data?.message || "Error deleting fee");
+        toast.error(error?.response?.data?.message || "Error deleting fee");
       }
     }
   };
@@ -82,7 +82,7 @@ export default function FeesMaster() {
       resetForm();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Operation failed");
+      toast.error(error?.response?.data?.message || "Operation failed");
     }
   };
 
@@ -125,17 +125,17 @@ export default function FeesMaster() {
                 <tr key={fee.id} className='hover:bg-gray-50'>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <span className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10'>
-                      {fee.type}
+                      {fee?.type}
                     </span>
                   </td>
                   <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
-                    ${Number(fee.amount).toFixed(2)}
+                    ${Number(fee?.amount).toFixed(2)}
                   </td>
                   <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
-                    {new Date(fee.effectiveDate).toLocaleDateString()}
+                    {new Date(fee?.effectiveDate).toLocaleDateString()}
                   </td>
                   <td className='px-6 py-4 text-gray-500'>
-                    {fee.description || "-"}
+                    {fee?.description || "-"}
                   </td>
                   <td className='px-6 py-4 text-right whitespace-nowrap'>
                     <div className='flex justify-end gap-2 text-gray-400'>

@@ -20,17 +20,17 @@ export default function Allocations() {
   const fetchAllocations = useCallback(async () => {
     try {
       const res = await api.get("/transport/allocations");
-      setAllocations(res.data.data);
+      setAllocations(res?.data?.data);
     } catch (e: any) {
       console.error(e);
-      toast.error(e.response?.data?.message || "Failed to fetch allocations");
+      toast.error(e?.response?.data?.message || "Failed to fetch allocations");
     }
   }, []);
 
   const fetchRoutes = useCallback(async () => {
     try {
       const res = await api.get("/transport/routes");
-      setRoutes(res.data.data);
+      setRoutes(res?.data?.data);
     } catch (e) {
       console.error(e);
     }
@@ -40,7 +40,7 @@ export default function Allocations() {
     // Need to implement student listing endpoint or minimal search
     try {
       const res = await api.get("/students");
-      setStudents(res.data.data);
+      setStudents(res?.data?.data);
     } catch (e) {
       console.error(e);
     }
@@ -146,22 +146,22 @@ export default function Allocations() {
                       </div>
                       <div>
                         <p className='font-medium text-gray-900'>
-                          {alloc.student.name}
+                          {alloc?.student?.name}
                         </p>
                         <p className='text-xs text-gray-500'>
-                          Roll: {alloc.student.rollNo}
+                          Roll: {alloc?.student?.rollNo}
                         </p>
                       </div>
                     </div>
                   </td>
                   <td className='px-6 py-4 font-medium whitespace-nowrap'>
-                    {alloc.route.name}
+                    {alloc?.route?.name}
                   </td>
                   <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
-                    {alloc.vehicle.vehicleNumber}
+                    {alloc?.vehicle?.vehicleNumber}
                   </td>
                   <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
-                    {new Date(alloc.startDate).toLocaleDateString()}
+                    {new Date(alloc?.startDate).toLocaleDateString()}
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <span className='inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700'>

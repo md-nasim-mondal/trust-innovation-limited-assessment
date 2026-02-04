@@ -20,10 +20,10 @@ export default function Students() {
   const fetchStudents = useCallback(async () => {
     try {
       const res = await api.get("/students");
-      setStudents(res.data.data);
+      setStudents(res?.data?.data);
     } catch (e: any) {
       console.error(e);
-      toast.error(e.response?.data?.message || "Failed to fetch students");
+      toast.error(e?.response?.data?.message || "Failed to fetch students");
     }
   }, []);
 
@@ -48,11 +48,11 @@ export default function Students() {
         address: "",
       });
       toast.success("Student created successfully");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       let message = "Error creating student";
-      if (isAxiosError(error) && error.response?.data?.message) {
-        message = error.response.data.message;
+      if (isAxiosError(error) && error?.response?.data?.message) {
+        message = error?.response?.data?.message;
       }
       toast.error(message);
     }
@@ -95,23 +95,23 @@ export default function Students() {
                       </div>
                       <div>
                         <p className='font-medium text-gray-900'>
-                          {student.name}
+                          {student?.name}
                         </p>
                         <p className='text-xs text-gray-500'>
-                          Roll: {student.rollNo}
+                          Roll: {student?.rollNo}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className='px-6 py-4'>{student.grade}</td>
-                  <td className='px-6 py-4'>{student.contactNumber || "-"}</td>
+                  <td className='px-6 py-4'>{student?.grade}</td>
+                  <td className='px-6 py-4'>{student?.contactNumber || "-"}</td>
                   <td
                     className='px-6 py-4 truncate max-w-xs'
-                    title={student.address || ""}>
-                    {student.address || "-"}
+                    title={student?.address || ""}>
+                    {student?.address || "-"}
                   </td>
                   <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
-                    {new Date(student.createdAt || "").toLocaleDateString()}
+                    {new Date(student?.createdAt || "").toLocaleDateString()}
                   </td>
                 </tr>
               ))}

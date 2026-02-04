@@ -19,10 +19,10 @@ export default function Vehicles() {
   const fetchVehicles = useCallback(async () => {
     try {
       const res = await api.get("/transport/vehicles");
-      setVehicles(res.data.data);
+      setVehicles(res?.data?.data);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Failed to fetch vehicles");
+      toast.error(error?.response?.data?.message || "Failed to fetch vehicles");
     }
   }, []);
 
@@ -37,13 +37,13 @@ export default function Vehicles() {
 
   const handleEdit = (vehicle: Vehicle) => {
     setFormData({
-      vehicleNumber: vehicle.vehicleNumber,
-      driverName: vehicle.driverName,
-      helperName: vehicle.helperName || "",
-      contactNumber: vehicle.contactNumber,
-      capacity: vehicle.capacity || 0,
+      vehicleNumber: vehicle?.vehicleNumber,
+      driverName: vehicle?.driverName,
+      helperName: vehicle?.helperName || "",
+      contactNumber: vehicle?.contactNumber,
+      capacity: vehicle?.capacity || 0,
     });
-    setEditingId(vehicle.id);
+    setEditingId(vehicle?.id);
     setIsModalOpen(true);
   };
 
@@ -55,7 +55,7 @@ export default function Vehicles() {
         fetchVehicles();
       } catch (error: any) {
         console.error(error);
-        toast.error(error.response?.data?.message || "Error deleting vehicle");
+        toast.error(error?.response?.data?.message || "Error deleting vehicle");
       }
     }
   };
@@ -86,7 +86,7 @@ export default function Vehicles() {
       resetForm();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Operation failed");
+      toast.error(error?.response?.data?.message || "Operation failed");
     }
   };
 
@@ -128,23 +128,23 @@ export default function Vehicles() {
               {vehicles.map((vehicle) => (
                 <tr key={vehicle.id} className='hover:bg-gray-50'>
                   <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
-                    {vehicle.vehicleNumber}
+                    {vehicle?.vehicleNumber}
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <div className='flex flex-col'>
                       <span className='font-medium text-gray-900'>
-                        {vehicle.driverName}
+                        {vehicle?.driverName}
                       </span>
                       <span className='text-xs text-gray-400'>
-                        Helper: {vehicle.helperName || "N/A"}
+                        Helper: {vehicle?.helperName || "N/A"}
                       </span>
                     </div>
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
-                    {vehicle.contactNumber}
+                    {vehicle?.contactNumber}
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
-                    {vehicle.capacity || "-"}
+                    {vehicle?.capacity || "-"}
                   </td>
                   <td className='px-6 py-4 text-right whitespace-nowrap'>
                     <div className='flex justify-end gap-2 text-gray-400'>

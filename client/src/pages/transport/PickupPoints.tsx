@@ -16,11 +16,11 @@ export default function PickupPoints() {
   const fetchPoints = useCallback(async () => {
     try {
       const res = await api.get("/transport/pickup-points");
-      setPoints(res.data.data);
+      setPoints(res?.data?.data);
     } catch (error: any) {
       console.error(error);
       toast.error(
-        error.response?.data?.message || "Failed to fetch pickup points",
+        error?.response?.data?.message || "Failed to fetch pickup points",
       );
     }
   }, []);
@@ -36,10 +36,10 @@ export default function PickupPoints() {
 
   const handleEdit = (point: PickupPoint) => {
     setFormData({
-      name: point.name,
-      address: point.address || "",
+      name: point?.name,
+      address: point?.address || "",
     });
-    setEditingId(point.id);
+    setEditingId(point?.id);
     setIsModalOpen(true);
   };
 
@@ -52,7 +52,7 @@ export default function PickupPoints() {
       } catch (error: any) {
         console.error(error);
         toast.error(
-          error.response?.data?.message || "Error deleting pickup point",
+          error?.response?.data?.message || "Error deleting pickup point",
         );
       }
     }
@@ -81,7 +81,7 @@ export default function PickupPoints() {
       resetForm();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Operation failed");
+      toast.error(error?.response?.data?.message || "Operation failed");
     }
   };
 
@@ -123,9 +123,9 @@ export default function PickupPoints() {
               {points.map((point) => (
                 <tr key={point.id} className='hover:bg-gray-50'>
                   <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
-                    {point.name}
+                    {point?.name}
                   </td>
-                  <td className='px-6 py-4'>{point.address || "-"}</td>
+                  <td className='px-6 py-4'>{point?.address || "-"}</td>
                   <td className='px-6 py-4 text-right whitespace-nowrap'>
                     <div className='flex justify-end gap-2 text-gray-400'>
                       <button

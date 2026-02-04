@@ -39,17 +39,17 @@ export default function Routes() {
   const fetchRoutes = useCallback(async () => {
     try {
       const res = await api.get("/transport/routes");
-      setRoutes(res.data.data);
+      setRoutes(res?.data?.data);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Failed to fetch routes");
+      toast.error(error?.response?.data?.message || "Failed to fetch routes");
     }
   }, []);
 
   const fetchFees = useCallback(async () => {
     try {
       const res = await api.get("/transport/fees"); // Updated endpoint
-      setFees(res.data.data);
+      setFees(res?.data?.data);
     } catch (e) {
       console.error(e);
     }
@@ -58,7 +58,7 @@ export default function Routes() {
   const fetchPoints = useCallback(async () => {
     try {
       const res = await api.get("/transport/pickup-points");
-      setPoints(res.data.data);
+      setPoints(res?.data?.data);
     } catch (e) {
       console.error(e);
     }
@@ -67,7 +67,7 @@ export default function Routes() {
   const fetchVehicles = useCallback(async () => {
     try {
       const res = await api.get("/transport/vehicles");
-      setVehicles(res.data.data);
+      setVehicles(res?.data?.data);
     } catch (e) {
       console.error(e);
     }
@@ -87,11 +87,11 @@ export default function Routes() {
 
   const handleEdit = (route: Route) => {
     setRouteForm({
-      name: route.name,
-      startPoint: route.startPoint,
-      endPoint: route.endPoint,
-      transportFeeId: route.transportFeeId || "",
-      stopIds: route.stops?.map((s) => s.pickupPoint?.id || "") || [],
+      name: route?.name,
+      startPoint: route?.startPoint,
+      endPoint: route?.endPoint,
+      transportFeeId: route?.transportFeeId || "",
+      stopIds: route?.stops?.map((s) => s?.pickupPoint?.id || "") || [],
     });
     setEditingId(route.id);
     setIsRouteModalOpen(true);
@@ -207,10 +207,11 @@ export default function Routes() {
             <div className='border-b bg-gray-50 px-5 py-4'>
               <div className='flex items-start justify-between'>
                 <h3 className='text-lg font-bold text-gray-900'>
-                  {route.name}
-                  {route.transportFee && (
+                  {route?.name}
+                  {route?.transportFee && (
                     <span className='ml-2 inline-flex items-center rounded-full bg-indigo-100 px-2 py-0.5 text-xs text-indigo-700'>
-                      {route.transportFee.type} (${route.transportFee.amount})
+                      {route?.transportFee?.type} ($
+                      {route?.transportFee?.amount})
                     </span>
                   )}
                 </h3>
@@ -229,11 +230,11 @@ export default function Routes() {
               </div>
               <div className='mt-1 flex items-center gap-2 text-xs text-gray-500 flex-wrap'>
                 <span className='font-semibold text-gray-700'>
-                  {route.startPoint}
+                  {route?.startPoint}
                 </span>
                 <span>→</span>
                 <span className='font-semibold text-gray-700'>
-                  {route.endPoint}
+                  {route?.endPoint}
                 </span>
               </div>
             </div>
@@ -245,13 +246,13 @@ export default function Routes() {
                   Stops
                 </h4>
                 <div className='flex flex-wrap gap-2'>
-                  {route.stops && route.stops.length > 0 ? (
+                  {route?.stops && route.stops.length > 0 ? (
                     route.stops.map((stop) => (
                       <span
                         key={stop.id}
                         className='inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600'>
                         <MapPin size={10} />
-                        {stop.pickupPoint.name}
+                        {stop?.pickupPoint?.name}
                       </span>
                     ))
                   ) : (
@@ -267,7 +268,7 @@ export default function Routes() {
                 <h4 className='mb-2 text-xs font-semibold uppercase text-gray-400'>
                   Assigned Vehicle
                 </h4>
-                {route.vehicleAssignments &&
+                {route?.vehicleAssignments &&
                 route.vehicleAssignments.length > 0 ? (
                   <div className='flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 p-2'>
                     <div className='rounded-md bg-white p-2 shadow-sm text-indigo-600'>
@@ -275,10 +276,10 @@ export default function Routes() {
                     </div>
                     <div>
                       <p className='text-sm font-semibold text-gray-900'>
-                        {route.vehicleAssignments[0].vehicle.vehicleNumber}
+                        {route?.vehicleAssignments?.[0]?.vehicle?.vehicleNumber}
                       </p>
                       <p className='text-xs text-gray-500'>
-                        {route.vehicleAssignments[0].vehicle.driverName}
+                        {route?.vehicleAssignments?.[0]?.vehicle?.driverName}
                       </p>
                     </div>
                   </div>

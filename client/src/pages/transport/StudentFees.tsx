@@ -24,7 +24,7 @@ export default function StudentFees() {
   const fetchStudentFees = useCallback(async () => {
     try {
       const res = await api.get("/transport/student-fees");
-      setStudentFees(res.data.data);
+      setStudentFees(res?.data?.data);
     } catch (error: any) {
       console.error(error);
       toast.error(
@@ -97,26 +97,26 @@ export default function StudentFees() {
               {studentFees.map((fee) => (
                 <tr key={fee.id} className='hover:bg-gray-50'>
                   <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
-                    {fee.student.name}{" "}
+                    {fee?.student?.name}{" "}
                     <span className='text-xs text-gray-500'>
-                      ({fee.student.rollNo})
+                      ({fee?.student?.rollNo})
                     </span>
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
-                    {fee.feeDescription}
+                    {fee?.feeDescription}
                   </td>
-                  <td className='px-6 py-4 whitespace-nowrap'>{fee.month}</td>
+                  <td className='px-6 py-4 whitespace-nowrap'>{fee?.month}</td>
                   <td className='px-6 py-4 font-bold text-gray-900 whitespace-nowrap'>
-                    ${Number(fee.amount).toFixed(2)}
+                    ${Number(fee?.amount).toFixed(2)}
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <span
                       className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                        fee.status === "PAID"
+                        fee?.status === "PAID"
                           ? "bg-green-50 text-green-700"
                           : "bg-amber-50 text-amber-700"
                       }`}>
-                      {fee.status}
+                      {fee?.status}
                     </span>
                   </td>
                   <td className='px-6 py-4 text-gray-500 whitespace-nowrap'>
