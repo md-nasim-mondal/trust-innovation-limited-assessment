@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: "http://localhost:3000", // Frontend URL
     credentials: true,
-  })
+  }),
 );
 
 // Application Routes
@@ -26,7 +26,7 @@ app.use("/api/v1", router);
 // Test Route
 app.get("/", (req: Request, res: Response) => {
   res.send({
-    message: "Tourify Server is Running 🚀",
+    message: "Trust Innovation Server is Running 🚀",
     timestamp: new Date().toISOString(),
   });
 });

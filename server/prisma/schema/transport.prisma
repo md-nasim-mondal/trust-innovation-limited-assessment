@@ -12,6 +12,7 @@ model Student {
     transportAllocation TransportAllocation?
 
     @@map("students")
+    @@schema("trust_innovation_db")
 }
 
 model StudentFeeAssignment {
@@ -26,6 +27,7 @@ model StudentFeeAssignment {
     updatedAt      DateTime @updatedAt @map("updated_at")
 
     @@map("student_fee_assignments")
+    @@schema("trust_innovation_db")
 }
 
 model TransportFeeMaster {
@@ -38,6 +40,7 @@ model TransportFeeMaster {
     routes Route[]
 
     @@map("transport_fee_masters")
+    @@schema("trust_innovation_db")
 }
 
 model Vehicle {
@@ -54,6 +57,7 @@ model Vehicle {
     routeAssignments VehicleRouteAssignment[]
 
     @@map("vehicles")
+    @@schema("trust_innovation_db")
 }
 
 model PickupPoint {
@@ -67,6 +71,7 @@ model PickupPoint {
     allocations TransportAllocation[]
 
     @@map("pickup_points")
+    @@schema("trust_innovation_db")
 }
 
 model Route {
@@ -84,6 +89,7 @@ model Route {
     allocations        TransportAllocation[]
 
     @@map("routes")
+    @@schema("trust_innovation_db")
 }
 
 model RoutePickupPoint {
@@ -98,6 +104,7 @@ model RoutePickupPoint {
     pickupPoint PickupPoint @relation(fields: [pickupPointId], references: [id])
 
     @@map("route_pickup_points")
+    @@schema("trust_innovation_db")
 }
 
 model VehicleRouteAssignment {
@@ -112,6 +119,7 @@ model VehicleRouteAssignment {
     route   Route   @relation(fields: [routeId], references: [id])
 
     @@map("vehicle_route_assignments")
+    @@schema("trust_innovation_db")
 }
 
 model TransportAllocation {
@@ -131,4 +139,5 @@ model TransportAllocation {
     pickupPoint PickupPoint? @relation(fields: [pickupPointId], references: [id])
 
     @@map("transport_allocations")
+    @@schema("trust_innovation_db")
 }

@@ -50,7 +50,7 @@ export default function DashboardLayout() {
           !isSidebarOpen ? "-translate-x-full" : "translate-x-0",
         )}>
         <div className='flex h-16 items-center justify-between px-4 bg-slate-950'>
-          <h1 className='text-xl font-bold tracking-wider'>SCHOOL MS</h1>
+          <h1 className='text-xl font-bold tracking-wider'>TRUST INNOVATION</h1>
           <button onClick={() => setSidebarOpen(false)} className='md:hidden'>
             <X size={24} />
           </button>

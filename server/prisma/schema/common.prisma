@@ -2,12 +2,16 @@ enum VerificationStatus {
   pending
   approved
   rejected
+
+  @@schema("trust_innovation_db")
 }
 
 enum MediaType {
   image
   video
   document
+
+  @@schema("trust_innovation_db")
 }
 
 enum MimeType {
@@ -16,10 +20,14 @@ enum MimeType {
   jpg
   pdf
   mp4
+
+  @@schema("trust_innovation_db")
 }
 
 enum TierName {
   Basic
   Standard
   Premium
+
+  @@schema("trust_innovation_db")
 }
