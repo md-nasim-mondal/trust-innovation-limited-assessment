@@ -1,52 +1,92 @@
 # Transport Management Module
 
-A comprehensive Transport Management System developed using React.js, Node.js, Express, and PostgreSQL with Prisma ORM. This module allows administrators to manage vehicles, routes, pickup points, and student allocations while ensuring automatic transport fee generation.
+A comprehensive **Transport Management System** developed using **React.js**, **Node.js (Express)**, and **PostgreSQL** with **Prisma ORM**. This module allows administrators to manage vehicles, routes, pickup points, and student allocations while ensuring **automatic transport fee generation**.
+
+This repository fulfills the requirements of the technical assignment, focusing on system design, backend-frontend integration, and real-world business logic.
 
 ## 🔗 Deployment
 
 - **Live Application (Frontend)**: [https://trust-innovation-limited-assessment.vercel.app/](https://trust-innovation-limited-assessment.vercel.app/)
 - **Backend API**: [https://trust-innovation-limited-server.vercel.app/](https://trust-innovation-limited-server.vercel.app/)
 
-## 🚀 Features
+---
 
-- **Masters Management**:
-  - **Vehicles**: Manage fleet details including driver and helper info.
-  - **Pickup Points**: Manage stop locations.
-  - **Fees Master**: Define fee structures (e.g., Monthly/Quarterly).
-- **Route Operations**:
-  - **Routes**: Create routes with start/end points.
-  - **Stops**: Map multiple pickup points to routes in sequence.
-  - **Vehicle Assignment**: Assign vehicles to specific routes.
-- **Student Operations**:
-  - **Student Management**: Create and list students.
-  - **Allocation**: Assign students to routes and vehicles.
-  - **Auto-Fee Generation**: Automatically generates a fee record for the student upon allocation.
-  - **Fee Management**: Track and update fee status (Paid/Pending).
+## 🏗 System Design & Database Schema
+
+The database is designed to be modular and scalable, ensuring data integrity across the transport module.
+
+### 1. **Core Transport Models**
+
+- **`Vehicle`**: Stores vehicle details (Number, Driver, Helper, Contact).
+- **`PickupPoint`**: Defines specific geographic locations for stops.
+- **`TransportFeeMaster`**: Defines standard fee structures (e.g., Monthly Zone A Fee, Quarterly Bus Fee).
+- **`Route`**: Represents a travel path (Start to End).
+  - _Relationship_: One Route is linked to one `TransportFeeMaster` (defining the cost for that route).
+
+### 2. **Mapping & Relations**
+
+- **`RoutePickupPoint`**: Many-to-Many link between `Route` and `PickupPoint`.
+  - Defines the **sequence order** of stops for a specific route.
+- **`VehicleRouteAssignment`**: Links a `Vehicle` to a `Route`. Allows tracking which vehicle is active on which route.
+
+### 3. **Student Integration (The Critical Path)**
+
+- **`Student`**: Core student record.
+- **`TransportAllocation`**: The link between a `Student`, their assigned `Route`, and `Vehicle`.
+  - _Constraint_: A student can only have one active allocation at a time.
+- **`StudentFeeAssignment`**: The financial record.
+  - Automatically generated when a student is allocated to a route.
+
+---
+
+## ⚡ API Logic & Automatic Fee Generation Flow
+
+The core requirement of **"Automatic Fee Generation"** is implemented with the following atomic transaction logic:
+
+1.  **Allocation Request**:
+    - Admin submits `Student ID`, `Route ID`, and `Vehicle ID`.
+
+2.  **Validation Layer**:
+    - Checks if the Student exists.
+    - Checks if the Student is _already_ allocated (prevents double billing).
+    - Checks if the Route has a valid `TransportFeeMaster` linked to it.
+
+3.  **Transactional Execution** (ACID Compliance):
+    - **Step A**: Create a `TransportAllocation` record, linking the student to the route/vehicle with `ACTIVE` status.
+    - **Step B**: Fetch the `amount` and `description` from the Route's `TransportFeeMaster`.
+    - **Step C**: **Immediately create** a `StudentFeeAssignment` record for the current month.
+      - _Status_: `PENDING`
+      - _Amount_: inherited from `TransportFeeMaster`.
+
+This ensures that **no student is allocated without a corresponding billing record**, satisfying the business requirement for revenue assurance.
+
+---
+
+## 📝 Key Assumptions & Decisions
+
+1.  **Fee Structure**: We assume fees are determined by the **Route** (e.g., Zone-based pricing). Therefore, `TransportFeeMaster` is linked to `Route`.
+2.  **Billing Cycle**: The system assumes monthly billing. When a student is allocated, fees are generated for the _current calendar month_.
+3.  **Active Status**: Deleting/Canceling a `TransportAllocation` stops _future_ fee generation but preserves historical fee records for audit purposes.
+4.  **Masters-First Approach**: The UI enforces creating Vehicles, Pickup Points, and Fees before defining Routes, ensuring data consistency.
+
+---
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React.js, TypeScript, Tailwind CSS, Lucide React, Axios.
+- **Frontend**: React.js 19, TypeScript, Tailwind CSS v4, Lucide React (Icons), React Hot Toast (Notifications).
 - **Backend**: Node.js, Express.js.
-- **Database**: PostgreSQL, Prisma ORM.
+- **Database**: PostgreSQL (via Supabase), Prisma ORM.
+- **Tooling**: Vite, ESLint, Prettier.
 
-## 📦 Project Structure
-
-This project follows a monorepo-style structure:
-
-- `client/`: React Frontend Application.
-- `server/`: Node.js/Express Backend Application.
+---
 
 ## ⚙️ Setup Instructions
 
-### Prerequisites
+### 1. Prerequisites
 
 - Node.js (v18+)
 - PostgreSQL Database
 - pnpm (recommended) or npm
-
-### 1. Database Setup
-
-Ensure you have a PostgreSQL database running. Update the connection string in `server/.env`.
 
 ### 2. Backend Setup
 
@@ -89,34 +129,17 @@ Ensure you have a PostgreSQL database running. Update the connection string in `
    ```bash
    pnpm dev
    ```
-
-The server will start at `http://localhost:5000`.
+   The server will start at `http://localhost:5000`.
 
 ### 3. Frontend Setup
 
-```bash
-cd client
-pnpm install
-pnpm run dev
-```
-
-The client will start at `http://localhost:5173`.
-
-## 🔄 API Logic & Auto-Fee Flow
-
-1.  **Define Masters**: Admin sets up Vehicles, Pickup Points, and Fee Structures.
-2.  **Create Route**: Admin creates a route, selects a Fee Structure, and adds Pickup Points as intermediate stops.
-3.  **Assign Vehicle**: A vehicle is assigned to the created Route.
-4.  **Allocate Student (Critical)**:
-    - Admin selects a Student, Route, and Vehicle.
-    - **Backend Logic**:
-      - Validates the request.
-      - Creates a `TransportAllocation` record.
-      - Fetches the `TransportFeeMaster` associated with the Route.
-      - **Auto-Generation**: Immediately creates a `StudentFeeAssignment` record for the _current month_ with `PENDING` status.
-
-## 📝 Assumptions
-
-- A student uses the transport for the entire month if allocated at any time during that month.
-- Routes have a single "Fee Structure" (e.g., Zone A fee) applied to all students on that route.
-- Vehicle assignment is 1:1 active per route at a time (simplified for this module).
+1. Navigate to client directory:
+   ```bash
+   cd client
+   ```
+2. Install dependencies and start:
+   ```bash
+   pnpm install
+   pnpm run dev
+   ```
+   The client will start at `http://localhost:5173`.
