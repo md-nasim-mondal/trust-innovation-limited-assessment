@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
+import { ZodError } from "zod";
 
 // Sanitize error to prevent exposing sensitive information in production
 const sanitizeError = (error: any) => {
@@ -18,7 +19,7 @@ const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ) => {
   let statusCode: number = err?.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
   const success = false;
@@ -43,6 +44,10 @@ const globalErrorHandler = (
       error = err?.meta;
       statusCode = httpStatus.BAD_REQUEST;
     }
+  } else if (err instanceof ZodError) {
+    message = "Validation Error";
+    error = err.issues;
+    statusCode = httpStatus.BAD_REQUEST;
   } else if (err instanceof Prisma.PrismaClientValidationError) {
     message = "Validation Error!!";
     error = err.message;
@@ -68,6 +73,13 @@ const globalErrorHandler = (
 
   // Sanitize error before sending response
   const sanitizedError = sanitizeError(error);
+
+  // Log error for debugging
+  console.log("Global Error Handler:", {
+    message,
+    error,
+    statusCode,
+  });
 
   res.status(statusCode).json({
     success,

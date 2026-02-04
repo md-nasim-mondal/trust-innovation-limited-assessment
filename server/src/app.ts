@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // CORS Setup
 app.use(
   cors({
-    origin: config.FRONTEND_URL, // Frontend URL from env
+    origin: [config.FRONTEND_URL, "http://localhost:5173"], // Frontend URL from env
     credentials: true,
   }),
 );

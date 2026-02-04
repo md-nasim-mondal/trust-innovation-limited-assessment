@@ -19,8 +19,11 @@ const createPickupPointZodSchema = z.object({
 
 const createTransportFeeZodSchema = z.object({
   body: z.object({
-    name: z.string().min(1, "Name is required"),
+    name: z.string().optional(),
+    type: z.string().min(1, "Type is required"),
     amount: z.number().min(0, "Amount must be non-negative"),
+    description: z.string().optional(),
+    effectiveDate: z.string().optional(),
   }),
 });
 

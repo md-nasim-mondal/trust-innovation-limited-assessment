@@ -196,7 +196,10 @@ export default function FeesMaster() {
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        amount: parseFloat(e.target.value),
+                        amount:
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value),
                       })
                     }
                   />

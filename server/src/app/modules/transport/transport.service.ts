@@ -143,7 +143,7 @@ const allocateTransport = async (
       await tx.studentFeeAssignment.create({
         data: {
           studentId: data.studentId,
-          feeDescription: `Transport Fee - ${route.transportFee.name} (${currentMonth})`,
+          feeDescription: `Transport Fee - ${route.transportFee.name || route.transportFee.type} (${currentMonth})`,
           amount: route.transportFee.amount,
           month: currentMonth,
           status: "PENDING",

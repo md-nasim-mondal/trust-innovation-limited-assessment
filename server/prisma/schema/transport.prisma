@@ -31,11 +31,14 @@ model StudentFeeAssignment {
 }
 
 model TransportFeeMaster {
-    id        String   @id @default(uuid()) @db.Uuid
-    name      String
-    amount    Decimal  @db.Decimal(10, 2)
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
+    id            String   @id @default(uuid()) @db.Uuid
+    name          String?
+    type          String   @default("MONTHLY") // MONTHLY, QUARTERLY, ONE_TIME
+    amount        Decimal  @db.Decimal(10, 2)
+    description   String?
+    effectiveDate String?  @map("effective_date")
+    createdAt     DateTime @default(now()) @map("created_at")
+    updatedAt     DateTime @updatedAt @map("updated_at")
 
     routes Route[]
 
